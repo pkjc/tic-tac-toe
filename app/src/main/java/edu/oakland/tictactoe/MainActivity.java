@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText pl1Name;
-    Button submitBtn;
+    private EditText pl1Name;
+    private Button submitBtn;
     private RadioGroup pl1RadioGroup;
     private RadioButton pl1RadioButton;
 
@@ -22,32 +22,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pl1RadioGroup = (RadioGroup) findViewById(R.id.pl1RadioGroup);
+        pl1RadioGroup = findViewById(R.id.pl1RadioGroup);
+        pl1RadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId){
+                RadioButton checkedRadioButton = (RadioButton) findViewById(checkedId);
+                String text = checkedRadioButton.getText().toString();
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         submitBtn = findViewById(R.id.player1NameSubmit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // get selected radio button from radioGroup
                 int selectedId = pl1RadioGroup.getCheckedRadioButtonId();
-
-                // find the radiobutton by returned id
-                pl1RadioButton = (RadioButton) findViewById(selectedId);
-
+                String selectedSym = null;
                 pl1Name = findViewById(R.id.pl1Name);
 
-                Toast.makeText(MainActivity.this,
-                        pl1RadioButton.getText(), Toast.LENGTH_SHORT).show();
+                if(selectedId == R.id.radio1){
+                    selectedSym = "o";
+                }else {
+                    selectedSym = "x";
+                }
 
+                Toast.makeText(MainActivity.this, selectedSym, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                intent.putExtra("player1name", pl1Name.getText());
-                intent.putExtra("player1symbol", pl1RadioButton.getText());
+                intent.putExtra("player1name", pl1Name.getText().toString());
+                intent.putExtra("player1symbol", selectedSym);
 
                 startActivity(intent);
             }
         });
-
-
     }
 }
