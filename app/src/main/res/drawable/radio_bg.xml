@@ -7,5 +7,5 @@
         android:state_pressed="true" />
     <item android:drawable="@drawable/rounded_rect_filled"
         android:state_checked="true" />
-    <item android:drawable="@drawable/o" />
+    <item android:drawable="@drawable/rounded_rect" />
 </selector>
