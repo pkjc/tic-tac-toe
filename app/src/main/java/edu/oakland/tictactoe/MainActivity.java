@@ -23,14 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         pl1RadioGroup = findViewById(R.id.pl1RadioGroup);
-        pl1RadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId){
-                RadioButton checkedRadioButton = (RadioButton) findViewById(checkedId);
-                String text = checkedRadioButton.getText().toString();
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-            }
-        });
 
         submitBtn = findViewById(R.id.player1NameSubmit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
