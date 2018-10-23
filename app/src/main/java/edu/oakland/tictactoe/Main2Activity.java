@@ -45,6 +45,7 @@ public class Main2Activity extends AppCompatActivity {
 
                 //TODO
                 Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+
                 intent.putExtra("player1name", player1name);
                 intent.putExtra("player1symbol", player1symbol);
                 intent.putExtra("player2name", pl2Name.getText().toString());
