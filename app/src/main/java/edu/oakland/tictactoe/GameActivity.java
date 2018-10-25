@@ -50,7 +50,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < 9; i++) {
             DataCell dataCell = new DataCell();
             GameButton btn = (GameButton) gameBoard.getChildAt(i);
-            //dataCell.addObserver(btn);
+            dataCell.addObserver(btn);
+            dataCells.add(dataCell);
             gameBtns.add(btn);
         }
 
@@ -84,14 +85,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //reset the game
         } else {
             //game button click
-             int index = (int) v.getTag();
+            int index = Integer.parseInt(v.getTag().toString());
             //call datacell
-            //curPlayer.markCell();
+            curPlayer.markCell(dataCells.get(index), index);
             //Set the button with player image
-            //gameBtns.get(0).setText(curPlayerSymbol);
-
+            if (curPlayerSymbol.equals("o")){
+                gameBtns.get(index).setBackgroundResource(R.drawable.o);
+            } else{
+               gameBtns.get(index).setBackgroundResource(R.drawable.x);
+            }
         }
-
 
     }
 }
