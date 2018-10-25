@@ -42,7 +42,7 @@ public class GameButton extends ConstraintLayout implements Observer {
         imgButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.BLUE);
+                //v.setBackgroundColor(Color.BLUE);
             }
         });
         init(null, 0);

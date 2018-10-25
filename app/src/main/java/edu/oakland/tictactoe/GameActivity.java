@@ -21,8 +21,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     List<Button> gameBtns = new ArrayList<Button>();
     GridLayout gameBoard = null;
-
+    List<DataCell> dataCells = new ArrayList<DataCell>();
+    Player curPlayer = null;
+    String curPlayerName = null;
     String curPlayerSymbol = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cancelBtn = findViewById(R.id.cancel);
         resetBtn = findViewById(R.id.reset);
         for (int i = 0; i < 9; i++) {
+            DataCell dataCell = new DataCell();
             Button btn = (Button) gameBoard.getChildAt(i);
             gameBtns.add(btn);
         }
@@ -57,12 +61,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         resetBtn.setOnClickListener(this);
 
         Intent intent = getIntent();
-        String playerNameVal = intent.getStringExtra("player1name");
-        String playerSym = intent.getStringExtra("player1symbol");
+        Player player1 = (Player) intent.getSerializableExtra("player1");
+        Player player2 = (Player) intent.getSerializableExtra("player2");
 
-        playerName.setText(playerNameVal);
-        curPlayerSymbol = playerSym;
+        if(player1.isCurrentPlayer()){
+            curPlayer = player1;
+            curPlayerName = player1.getName();
+            curPlayerSymbol = player1.getSymbol();
 
+            playerName.setText(curPlayerName);
+        }
     }
 
     @Override
@@ -75,8 +83,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //reset the game
         } else {
             //game button click
-           // int index = (int) v.getTag();
+             int index = (int) v.getTag();
             //call datacell
+            //curPlayer.markCell();
             //Set the button with player image
             //gameBtns.get(0).setText(curPlayerSymbol);
 

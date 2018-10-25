@@ -1,6 +1,8 @@
 package edu.oakland.tictactoe;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 	private String name;
 	private DataCell dataCell[] = new DataCell[9];
 	private String symbol;
@@ -11,7 +13,7 @@ public class Player {
 		this.symbol = symbol;
 		this.isCurrentPlayer = isCurrentPlayer;
 	}
-	
+
 	public void markCell(DataCell observable, int cellNum){
 		dataCell[cellNum] = observable;
 		dataCell[cellNum].setSymbol(this.symbol);
