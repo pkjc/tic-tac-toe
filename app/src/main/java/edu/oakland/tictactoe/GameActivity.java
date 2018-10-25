@@ -1,11 +1,9 @@
 package edu.oakland.tictactoe;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -15,7 +13,7 @@ import java.util.List;
 public class GameActivity extends AppCompatActivity {
     GameButton gameButton = null;
     TextView playerName = null;
-    List<GameButton> gameBtns = new ArrayList<GameButton>();
+    List<GameButton> gameBtns = new ArrayList<>();
     GridLayout gameBoard = null;
 
     @Override

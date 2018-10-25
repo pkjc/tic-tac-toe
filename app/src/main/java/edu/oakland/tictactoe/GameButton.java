@@ -2,12 +2,7 @@ package edu.oakland.tictactoe;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +44,6 @@ public class GameButton extends ConstraintLayout implements Observer {
 
     public GameButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-
-
         init(attrs, 0);
     }
 
@@ -108,6 +100,6 @@ public class GameButton extends ConstraintLayout implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        //this.setLabel(arg.toString());
     }
 }
