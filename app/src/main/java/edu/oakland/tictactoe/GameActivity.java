@@ -95,6 +95,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                gameBtns.get(index).setBackgroundResource(R.drawable.x);
             }
         }
-
     }
 }
