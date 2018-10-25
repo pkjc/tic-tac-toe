@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.Observable;
@@ -29,7 +27,7 @@ public class GameButton extends ConstraintLayout implements Observer {
 
     public GameButton(Context context) {
         super(context);
-        LayoutInflater inflater = LayoutInflater.from(context);
+        /*LayoutInflater inflater = LayoutInflater.from(context);
         ConstraintLayout constraintLayout = (ConstraintLayout) inflater.inflate(R.layout.sample_game_button, this);
         imgButton = constraintLayout.findViewById(R.id.tttButton);
 
@@ -38,7 +36,7 @@ public class GameButton extends ConstraintLayout implements Observer {
             public void onClick(View v) {
                 //v.setBackgroundColor(Color.BLUE);
             }
-        });
+        });*/
         init(null, 0);
     }
 
