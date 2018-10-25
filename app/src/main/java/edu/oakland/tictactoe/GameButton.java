@@ -6,30 +6,52 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * TODO: document your custom view class.
  */
-public class GameButton extends View implements Observer{
-    private String mExampleString; // TODO: use a default from R.string...
-    private int mExampleColor = Color.RED; // TODO: use a default from R.color...
-    private float mExampleDimension = 0; // TODO: use a default from R.dimen...
-    private Drawable mExampleDrawable;
+public class GameButton extends ConstraintLayout implements Observer {
+    private int btnIndex;
+    private ImageButton imgButton = null;
+    private int btnCounter = 0;
 
-    private TextPaint mTextPaint;
-    private float mTextWidth;
-    private float mTextHeight;
+    public int getBtnIndex() {
+        return btnIndex;
+    }
+
+    public void setBtnIndex(int btnIndex) {
+        this.btnIndex = btnIndex;
+    }
 
     public GameButton(Context context) {
         super(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        ConstraintLayout constraintLayout = (ConstraintLayout) inflater.inflate(R.layout.sample_game_button, this);
+        imgButton = constraintLayout.findViewById(R.id.tttButton);
+
+        imgButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         init(null, 0);
     }
 
     public GameButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+
+
         init(attrs, 0);
     }
 
@@ -43,45 +65,21 @@ public class GameButton extends View implements Observer{
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.GameButton, defStyle, 0);
 
-        mExampleString = a.getString(
-                R.styleable.GameButton_exampleString);
-        mExampleColor = a.getColor(
-                R.styleable.GameButton_exampleColor,
-                mExampleColor);
-        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
-        // values that should fall on pixel boundaries.
-        mExampleDimension = a.getDimension(
-                R.styleable.GameButton_exampleDimension,
-                mExampleDimension);
-
-        if (a.hasValue(R.styleable.GameButton_exampleDrawable)) {
-            mExampleDrawable = a.getDrawable(
-                    R.styleable.GameButton_exampleDrawable);
-            mExampleDrawable.setCallback(this);
-        }
+        btnIndex = a.getIndex(R.styleable.GameButton_index);
 
         a.recycle();
-
-        // Set up a default TextPaint object
-        mTextPaint = new TextPaint();
-        mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setTextAlign(Paint.Align.LEFT);
-
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements();
     }
 
-    private void invalidateTextPaintAndMeasurements() {
+    /*private void invalidateTextPaintAndMeasurements() {
         mTextPaint.setTextSize(mExampleDimension);
         mTextPaint.setColor(mExampleColor);
         mTextWidth = mTextPaint.measureText(mExampleString);
 
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         mTextHeight = fontMetrics.bottom;
-    }
+    }*/
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    /*protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         // TODO: consider storing these as member variables to reduce
@@ -106,89 +104,10 @@ public class GameButton extends View implements Observer{
                     paddingLeft + contentWidth, paddingTop + contentHeight);
             mExampleDrawable.draw(canvas);
         }
-    }
-
-    /**
-     * Gets the example string attribute value.
-     *
-     * @return The example string attribute value.
-     */
-    public String getExampleString() {
-        return mExampleString;
-    }
-
-    /**
-     * Sets the view's example string attribute value. In the example view, this string
-     * is the text to draw.
-     *
-     * @param exampleString The example string attribute value to use.
-     */
-    public void setExampleString(String exampleString) {
-        mExampleString = exampleString;
-        invalidateTextPaintAndMeasurements();
-    }
-
-    /**
-     * Gets the example color attribute value.
-     *
-     * @return The example color attribute value.
-     */
-    public int getExampleColor() {
-        return mExampleColor;
-    }
-
-    /**
-     * Sets the view's example color attribute value. In the example view, this color
-     * is the font color.
-     *
-     * @param exampleColor The example color attribute value to use.
-     */
-    public void setExampleColor(int exampleColor) {
-        mExampleColor = exampleColor;
-        invalidateTextPaintAndMeasurements();
-    }
-
-    /**
-     * Gets the example dimension attribute value.
-     *
-     * @return The example dimension attribute value.
-     */
-    public float getExampleDimension() {
-        return mExampleDimension;
-    }
-
-    /**
-     * Sets the view's example dimension attribute value. In the example view, this dimension
-     * is the font size.
-     *
-     * @param exampleDimension The example dimension attribute value to use.
-     */
-    public void setExampleDimension(float exampleDimension) {
-        mExampleDimension = exampleDimension;
-        invalidateTextPaintAndMeasurements();
-    }
-
-    /**
-     * Gets the example drawable attribute value.
-     *
-     * @return The example drawable attribute value.
-     */
-    public Drawable getExampleDrawable() {
-        return mExampleDrawable;
-    }
-
-    /**
-     * Sets the view's example drawable attribute value. In the example view, this drawable is
-     * drawn above the text.
-     *
-     * @param exampleDrawable The example drawable attribute value to use.
-     */
-    public void setExampleDrawable(Drawable exampleDrawable) {
-        mExampleDrawable = exampleDrawable;
-    }
+    }*/
 
     @Override
-    public void update(View view) {
+    public void update(Observable o, Object arg) {
 
     }
 }

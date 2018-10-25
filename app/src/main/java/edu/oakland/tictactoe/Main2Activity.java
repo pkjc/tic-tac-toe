@@ -20,6 +20,8 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        pl2RadioGroup = findViewById(R.id.pl2RadioGroup);
+
         Intent intent = getIntent();
 
         final String player1name = intent.getStringExtra("player1name");
@@ -28,14 +30,14 @@ public class Main2Activity extends AppCompatActivity {
         Toast.makeText(Main2Activity.this, player1name, Toast.LENGTH_SHORT).show();
         Toast.makeText(Main2Activity.this, player1symbol, Toast.LENGTH_LONG).show();
 
-        submitBtn = findViewById(R.id.player1NameSubmit);
+        submitBtn = findViewById(R.id.player2NameSubmit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // get selected radio button from radioGroup
                 int selectedId = pl2RadioGroup.getCheckedRadioButtonId();
                 String selectedSym = null;
-                pl2Name = findViewById(R.id.pl1Name);
+                pl2Name = findViewById(R.id.pl2Name);
 
                 if(selectedId == R.id.radio1){
                     selectedSym = "o";
