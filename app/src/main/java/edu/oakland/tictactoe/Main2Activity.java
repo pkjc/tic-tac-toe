@@ -47,13 +47,12 @@ public class Main2Activity extends AppCompatActivity {
 
                 //TODO
                 Intent intent = new Intent(Main2Activity.this, GameActivity.class);
-
-//                intent.putExtra("player1name", player1name);
-//                intent.putExtra("player1symbol", player1symbol);
-                intent.putExtra("player2name", pl2Name.getText().toString());
-                intent.putExtra("player2symbol", selectedSym);
-                Player player1 = new Player(player1name, player1symbol, false);
+                /*intent.putExtra("player2name", pl2Name.getText().toString());
+                intent.putExtra("player2symbol", selectedSym);*/
+                Player player1 = new Player(player1name, player1symbol, true);
+                Player player2 = new Player(pl2Name.getText().toString(), selectedSym, false);
                 intent.putExtra("player1", player1);
+                intent.putExtra("player2", player2);
                 startActivity(intent);
             }
         });

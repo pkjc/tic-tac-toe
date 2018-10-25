@@ -6,7 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,7 +16,7 @@ import java.util.Observer;
  */
 public class GameButton extends ConstraintLayout implements Observer {
     private int btnIndex;
-    private ImageButton imgButton = null;
+    private Button imgButton = null;
     private int btnCounter = 0;
 
     public int getBtnIndex() {
@@ -36,7 +36,7 @@ public class GameButton extends ConstraintLayout implements Observer {
         imgButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //v.setBackgroundColor(Color.BLUE);
             }
         });
         init(null, 0);
