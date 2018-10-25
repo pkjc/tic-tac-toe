@@ -35,7 +35,7 @@ public class GameButton extends ConstraintLayout implements Observer {
 
     public GameButton(Context context) {
         super(context);
-        LayoutInflater inflater = LayoutInflater.from(context);
+        /*LayoutInflater inflater = LayoutInflater.from(context);
         ConstraintLayout constraintLayout = (ConstraintLayout) inflater.inflate(R.layout.sample_game_button, this);
         imgButton = constraintLayout.findViewById(R.id.tttButton);
 
@@ -44,7 +44,7 @@ public class GameButton extends ConstraintLayout implements Observer {
             public void onClick(View v) {
                 //v.setBackgroundColor(Color.BLUE);
             }
-        });
+        });*/
         init(null, 0);
     }
 

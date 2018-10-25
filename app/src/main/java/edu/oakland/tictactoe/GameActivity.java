@@ -19,7 +19,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button cancelBtn = null;
     Button resetBtn = null;
 
-    List<Button> gameBtns = new ArrayList<Button>();
+    List<GameButton> gameBtns = new ArrayList<GameButton>();
     GridLayout gameBoard = null;
     List<DataCell> dataCells = new ArrayList<DataCell>();
     Player curPlayer = null;
@@ -49,11 +49,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         resetBtn = findViewById(R.id.reset);
         for (int i = 0; i < 9; i++) {
             DataCell dataCell = new DataCell();
-            Button btn = (Button) gameBoard.getChildAt(i);
+            GameButton btn = (GameButton) gameBoard.getChildAt(i);
+            //dataCell.addObserver(btn);
             gameBtns.add(btn);
         }
 
-        for(Button b: gameBtns){
+        for(GameButton b: gameBtns){
             b.setOnClickListener(this);
         }
         startBtn.setOnClickListener(this);
