@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * TODO: document your custom view class.
  */
-public class GameButton extends ConstraintLayout implements Observer{
+public class GameButton extends ConstraintLayout implements Observer {
     private int btnIndex;
     private ImageButton imgButton = null;
     private int btnCounter = 0;
@@ -104,7 +107,7 @@ public class GameButton extends ConstraintLayout implements Observer{
     }*/
 
     @Override
-    public void update(View view) {
+    public void update(Observable o, Object arg) {
 
     }
 }
