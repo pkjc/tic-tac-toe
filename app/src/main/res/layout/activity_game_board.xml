@@ -58,7 +58,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="1" app:index="1"/>
+            android:tag="1" app:btnIndex="0"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button2"
@@ -68,7 +68,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="2" app:index="2"/>
+            android:tag="2" app:btnIndex="1"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button3"
@@ -78,7 +78,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="3" app:index="3"/>
+            android:tag="3" app:btnIndex="2"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button4"
@@ -88,7 +88,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="1" app:index="4"/>
+            android:tag="1" app:btnIndex="3"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button5"
@@ -98,7 +98,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="2" app:index="5"/>
+            android:tag="2" app:btnIndex="4"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button6"
@@ -108,7 +108,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="3" app:index="6"/>
+            android:tag="3" app:btnIndex="5"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button7"
@@ -118,7 +118,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="1" app:index="7"/>
+            android:tag="1" app:btnIndex="6"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button8"
@@ -128,7 +128,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="2" app:index="8"/>
+            android:tag="2" app:btnIndex="7"></edu.oakland.tictactoe.GameButton>
 
         <edu.oakland.tictactoe.GameButton
             android:id="@+id/button9"
@@ -138,7 +138,7 @@
             android:layout_gravity="fill_horizontal"
             android:gravity="center"
             android:background="@drawable/rounded_rect_filled"
-            android:tag="3" app:index="9"/>
+            android:tag="3" app:btnIndex="8"></edu.oakland.tictactoe.GameButton>
 
     </GridLayout>
 

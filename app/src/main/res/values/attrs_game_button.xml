@@ -1,5 +1,5 @@
 <resources>
     <declare-styleable name="GameButton">
-        <attr name="index" format="integer" />
+        <attr name="btnIndex" format="integer" />
     </declare-styleable>
 </resources>

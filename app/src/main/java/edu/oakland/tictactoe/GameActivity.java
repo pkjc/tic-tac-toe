@@ -19,9 +19,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button cancelBtn = null;
     Button resetBtn = null;
 
-    List<GameButton> gameBtns = new ArrayList<GameButton>();
+    GameButton[] gameBtns = new GameButton[9];
     GridLayout gameBoard = null;
-    List<DataCell> dataCells = new ArrayList<DataCell>();
+    DataCell[] dataCells = new DataCell[9];
     Player curPlayer = null;
     String curPlayerName = null;
     String curPlayerSymbol = null;
@@ -48,12 +48,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cancelBtn = findViewById(R.id.cancel);
         resetBtn = findViewById(R.id.reset);
         for (int i = 0; i < 9; i++) {
-            DataCell dataCell = new DataCell();
             GameButton btn = (GameButton) gameBoard.getChildAt(i);
-            btn.setActivated(false);
+            //System.out.println("Here"+btn.getBtnIndex());
+            int index = btn.getBtnIndex();
+            System.out.println(index+"-----------");
+            DataCell dataCell = new DataCell(btn);
             dataCell.addObserver(btn);
-            dataCells.add(dataCell);
-            gameBtns.add(btn);
+            dataCells[index] = dataCell;
+            btn.setEnabled(false);
+            gameBtns[index] = btn;
         }
 
         for(GameButton b: gameBtns){
@@ -79,24 +82,33 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(startBtn.equals(v.getId())){
+        if(startBtn.getId() == v.getId()){
             //enable all the buttons
-        } else if(cancelBtn.equals(v.getId())){
+            for (GameButton b: gameBtns) {
+                b.setEnabled(true);
+            }
+        } else if(cancelBtn.getId() == v.getId()){
             //disable all buttons
-        } else if(resetBtn.equals(v.getId())){
+            for (GameButton b: gameBtns) {
+                b.setEnabled(false);
+            }
+        } else if(resetBtn.getId() == v.getId()){
             //reset the game
         } else {
             //game button click
-            int index = ((GameButton)v).getBtnIndex();
-            //call datacell
-            curPlayer.markCell(dataCells.get(index), index);
-            //Set the button with player image
-            if (curPlayerSymbol.equals("o")){
-                gameBtns.get(index).setBackgroundResource(R.drawable.o);
-            } else{
-               gameBtns.get(index).setBackgroundResource(R.drawable.x);
+            if(v instanceof GameButton) {
+                int index = ((GameButton) v).getBtnIndex();
+                //call datacell
+                curPlayer.markCell(dataCells[index], index);
+                //Set the button with player image
+                if (curPlayerSymbol.equals("o")) {
+                    gameBtns[index].setBackgroundResource(R.drawable.o);
+                } else {
+                    gameBtns[index].setBackgroundResource(R.drawable.x);
+                }
+                swapPlayers();
+                gameBtns[index].setEnabled(false);
             }
-            swapPlayers();
         }
     }
 

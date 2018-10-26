@@ -14,10 +14,11 @@ import java.util.Observer;
  */
 public class GameButton extends ConstraintLayout implements Observer {
     private int btnIndex;
-    private Button imgButton = null;
+    private Button button = null;
     private int btnCounter = 0;
 
     public int getBtnIndex() {
+        System.out.println("btnIndex" +btnIndex);
         return btnIndex;
     }
 
@@ -27,17 +28,8 @@ public class GameButton extends ConstraintLayout implements Observer {
 
     public GameButton(Context context) {
         super(context);
-        /*LayoutInflater inflater = LayoutInflater.from(context);
-        ConstraintLayout constraintLayout = (ConstraintLayout) inflater.inflate(R.layout.sample_game_button, this);
-        imgButton = constraintLayout.findViewById(R.id.tttButton);
-
-        imgButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //v.setBackgroundColor(Color.BLUE);
-            }
-        });*/
         init(null, 0);
+
     }
 
     public GameButton(Context context, AttributeSet attrs) {
@@ -55,7 +47,7 @@ public class GameButton extends ConstraintLayout implements Observer {
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.GameButton, defStyle, 0);
 
-        btnIndex = a.getIndex(R.styleable.GameButton_index);
+        btnIndex = Integer.parseInt(a.getString(R.styleable.GameButton_btnIndex));
 
         a.recycle();
     }
