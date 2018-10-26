@@ -117,5 +117,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         temp = curPlayer;
         curPlayer = otherPlayer;
         otherPlayer = temp;
+
+        //set the curPlayerSymbol and curPlayerName
+        curPlayerName = curPlayer.getName();
+        curPlayerSymbol = curPlayer.getSymbol();
     }
 }
