@@ -25,7 +25,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Player curPlayer = null;
     String curPlayerName = null;
     String curPlayerSymbol = null;
-
+    Player otherPlayer = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < 9; i++) {
             DataCell dataCell = new DataCell();
             GameButton btn = (GameButton) gameBoard.getChildAt(i);
+            btn.setActivated(false);
             dataCell.addObserver(btn);
             dataCells.add(dataCell);
             gameBtns.add(btn);
@@ -68,6 +69,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if(player1.isCurrentPlayer()){
             curPlayer = player1;
+            otherPlayer = player2;
             curPlayerName = player1.getName();
             curPlayerSymbol = player1.getSymbol();
 
@@ -85,7 +87,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //reset the game
         } else {
             //game button click
-            int index = Integer.parseInt(v.getTag().toString());
+            int index = ((GameButton)v).getBtnIndex();
             //call datacell
             curPlayer.markCell(dataCells.get(index), index);
             //Set the button with player image
@@ -94,6 +96,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             } else{
                gameBtns.get(index).setBackgroundResource(R.drawable.x);
             }
+            swapPlayers();
         }
+    }
+
+    public void swapPlayers(){
+        Player temp = null;
+        temp = curPlayer;
+        curPlayer = otherPlayer;
+        otherPlayer = temp;
     }
 }
