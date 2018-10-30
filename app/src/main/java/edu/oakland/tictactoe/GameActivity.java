@@ -40,6 +40,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cancelBtn = findViewById(R.id.cancel);
         resetBtn = findViewById(R.id.reset);
 
+        initGame();
+
+    }
+
+    private void initGame() {
+
         for (int i = 0; i < 9; i++) {
             GameButton btn = (GameButton) gameBoard.getChildAt(i);
             int index = btn.getBtnIndex();
@@ -53,15 +59,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         startBtn.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
         resetBtn.setOnClickListener(this);
-
     }
 
     private void stopGame() {
+        dataCells = null;
+        initGame();
         for (GameButton b : gameBtns) {
             b.setBackgroundResource(R.drawable.rounded_rect_filled);
             b.setEnabled(false);
         }
         playerName.setText("");
+        playerNameLabel.setText("Current Player: ");
+        playerName.setTextSize(18);
+        playerName.setTextColor(Color.BLACK);
     }
 
     private void playerWonProcess(Player player) {
