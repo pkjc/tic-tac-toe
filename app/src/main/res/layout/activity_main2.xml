@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pl2Name">
 
         <RadioButton
-            android:id="@+id/symbol1"
+            android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
@@ -79,7 +79,7 @@
             android:background="@drawable/o"
             />
         <RadioButton
-            android:id="@+id/symbol2"
+            android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
