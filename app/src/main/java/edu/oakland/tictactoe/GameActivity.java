@@ -1,12 +1,16 @@
 package edu.oakland.tictactoe;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     TextView playerName;
@@ -52,67 +56,93 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private boolean winningConditions(){
-        return false;
+    private void stopGame() {
+        for (GameButton b : gameBtns) {
+            b.setBackgroundResource(R.drawable.rounded_rect_filled);
+            b.setEnabled(false);
+        }
+        playerName.setText("");
     }
 
-    private void stopGame(){
-
-    }
-
-    private void resetGame(){
-
-    }
-
-    private void checkIfPlayerHasWon(Player player) {
+    private void playerWonProcess(Player player) {
         String symbol = player.getSymbol();
-//        TTTButton[] btns = new TTTButton[9];
-//        for(int i = 0; i< boardPanel.getComponentCount(); i++){
-//            if(boardPanel.getComponent(i) instanceof TTTButton){
-//                btns[i] = (TTTButton) boardPanel.getComponent(i);
-//            }
-//        }
-//        if(winningConditions(symbol, btns)){
-//            turnLabel.setText(player.getName() + " has won!");
-//            turnLabel.setFont(new Font("", 1, 16));
-//            stopGame(btns, true);
-//        }
+        if(winningConditions(symbol)){
+            playerName.setText(player.getName() + " has won!");
+            stopGame();
+        }
+    }
+
+    private boolean winningConditions(String symbol) {
+        Bitmap playerSymbol = null;
+        if (symbol.equalsIgnoreCase("o")) {
+            playerSymbol = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.o);
+        } else if (symbol.equalsIgnoreCase("x")) {
+            playerSymbol = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.x);
+        }
+        BitmapDrawable[] btnBg = new BitmapDrawable[9];
+        for (int i = 0; i < gameBtns.length; i++) {
+            //btnBg[i] = (BitmapDrawable)gameBtns[i].getBackground().getCurrent();
+        }
+        //Toast.makeText(this, gameBtns[0].getBackground().equals(getResources().getDrawable(R.drawable.o)) + " ---- ", Toast.LENGTH_LONG).show();
+        return false;
+//        return btnBg[0].getBitmap().sameAs(playerSymbol) &&
+//                btnBg[1].getBitmap().sameAs(playerSymbol) &&
+//                btnBg[2].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[3].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[4].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[5].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[6].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[7].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[8].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[0].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[3].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[6].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[1].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[4].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[7].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[2].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[5].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[8].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[0].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[4].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[8].getBitmap().sameAs(playerSymbol) ||
+//                btnBg[2].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[4].getBitmap().sameAs(playerSymbol) &&
+//                        btnBg[6].getBitmap().sameAs(playerSymbol);
     }
 
     @Override
     public void onClick(View v) {
-        if(startBtn.getId() == v.getId()){
+        if (startBtn.getId() == v.getId()) {
             //enable all the buttons
-            for (GameButton b: gameBtns) {
+            for (GameButton b : gameBtns) {
                 b.setBackgroundResource(R.drawable.radio_bg);
                 b.setEnabled(true);
             }
-        } else if(cancelBtn.getId() == v.getId()){
+        } else if (cancelBtn.getId() == v.getId()) {
             //disable all buttons
-            for (GameButton b: gameBtns) {
-                b.setEnabled(false);
-            }
-        } else if(resetBtn.getId() == v.getId()){
+            stopGame();
+        } else if (resetBtn.getId() == v.getId()) {
             //reset the game
+            stopGame();
         } else {
             //game button click
-            if(v instanceof GameButton) {
-                //Toast.makeText(GameActivity.this, "button clicked", Toast.LENGTH_SHORT).show();
+            if (v instanceof GameButton) {
                 int index = ((GameButton) v).getBtnIndex();
-                if(player1.isCurrentPlayer()){
-                    //Toast.makeText(GameActivity.this, "player1 " + player1.getSymbol(), Toast.LENGTH_SHORT).show();
+                if (player1.isCurrentPlayer()) {
+                    Toast.makeText(this, ((GameButton) v).getBackground().equals(getResources().getDrawable(R.drawable.o)) + " ---- ", Toast.LENGTH_LONG).show();
                     player1.markCell(dataCells[index], index);
                     player1.setCurrentPlayer(false);
                     player2.setCurrentPlayer(true);
-                    // Set text in top text view
-                    // Check if player has won
-                }else {
+                    playerName.setText(player1.getName());
+                    playerWonProcess(player1);
+                } else {
                     //Toast.makeText(GameActivity.this, "player2 " + player2.getSymbol(), Toast.LENGTH_SHORT).show();
                     player2.markCell(dataCells[index], index);
                     player2.setCurrentPlayer(false);
                     player1.setCurrentPlayer(true);
-                    // Set text in top text view
-                    // Check if player has won
+                    playerName.setText(player2.getName());
+                    playerWonProcess(player2);
                 }
                 gameBtns[index].setEnabled(false);
             }
