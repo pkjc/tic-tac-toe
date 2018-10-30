@@ -18,7 +18,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button resetBtn;
 
     GameButton[] gameBtns = new GameButton[9];
-    DataCell[] dataCells = new DataCell[9];
+    DataCell[] dataCells = null;
 
     GridLayout gameBoard;
     Player player1;
@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initGame() {
-
+        dataCells = new DataCell[9];
         for (int i = 0; i < 9; i++) {
             GameButton btn = (GameButton) gameBoard.getChildAt(i);
             int index = btn.getBtnIndex();
@@ -66,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initGame();
         for (GameButton b : gameBtns) {
             b.setBackgroundResource(R.drawable.rounded_rect_filled);
+            b.setTag("");
             b.setEnabled(false);
         }
         playerName.setText("");
