@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     TextView playerName;
@@ -129,7 +128,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             stopGame();
         } else {
             if (v instanceof GameButton) {
-                Toast.makeText(this, "" + ((GameButton) v).getBtnIndex(), Toast.LENGTH_SHORT).show();
                 int index = ((GameButton) v).getBtnIndex();
                 if (player1.isCurrentPlayer()) {
                     player1.markCell(dataCells[index], index);
