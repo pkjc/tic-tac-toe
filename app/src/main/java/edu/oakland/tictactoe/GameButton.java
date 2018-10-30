@@ -52,6 +52,15 @@ public class GameButton extends ConstraintLayout implements Observer {
         a.recycle();
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg.equals("o")) {
+            this.setBackgroundResource(R.drawable.o);
+        }else {
+            this.setBackgroundResource(R.drawable.x);
+        }
+    }
+
     /*private void invalidateTextPaintAndMeasurements() {
         mTextPaint.setTextSize(mExampleDimension);
         mTextPaint.setColor(mExampleColor);
@@ -87,9 +96,4 @@ public class GameButton extends ConstraintLayout implements Observer {
             mExampleDrawable.draw(canvas);
         }
     }*/
-
-    @Override
-    public void update(Observable o, Object arg) {
-        //this.setLabel(arg.toString());
-    }
 }

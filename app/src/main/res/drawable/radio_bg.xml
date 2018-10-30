@@ -3,9 +3,9 @@
     <item android:drawable="@drawable/rounded_rect"
         android:state_checked="true"
         android:state_pressed="true" />
-    <item android:drawable="@drawable/rounded_rect_filled"
-        android:state_pressed="true" />
-    <item android:drawable="@drawable/rounded_rect_filled"
-        android:state_checked="true" />
+    <!--<item android:drawable="@drawable/rounded_rect_filled"-->
+        <!--android:state_pressed="true" />-->
+    <!--<item android:drawable="@drawable/rounded_rect_filled"-->
+        <!--android:state_checked="true" />-->
     <item android:drawable="@drawable/rounded_rect" />
 </selector>

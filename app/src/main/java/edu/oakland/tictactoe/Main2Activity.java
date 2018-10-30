@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity {
     private EditText pl2Name;
@@ -27,9 +26,6 @@ public class Main2Activity extends AppCompatActivity {
         final String player1name = intent.getStringExtra("player1name");
         final String player1symbol = intent.getStringExtra("player1symbol");
 
-        Toast.makeText(Main2Activity.this, player1name, Toast.LENGTH_SHORT).show();
-        Toast.makeText(Main2Activity.this, player1symbol, Toast.LENGTH_LONG).show();
-
         submitBtn = findViewById(R.id.player2NameSubmit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,10 +41,7 @@ public class Main2Activity extends AppCompatActivity {
                     selectedSym = "x";
                 }
 
-                //TODO
                 Intent intent = new Intent(Main2Activity.this, GameActivity.class);
-                /*intent.putExtra("player2name", pl2Name.getText().toString());
-                intent.putExtra("player2symbol", selectedSym);*/
                 Player player1 = new Player(player1name, player1symbol, true);
                 Player player2 = new Player(pl2Name.getText().toString(), selectedSym, false);
                 intent.putExtra("player1", player1);

@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                     selectedSym = "x";
                 }
 
-                Toast.makeText(MainActivity.this, selectedSym, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                 intent.putExtra("player1name", pl1Name.getText().toString());
                 intent.putExtra("player1symbol", selectedSym);
