@@ -8,42 +8,60 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-    private EditText pl1Name;
-    private Button submitBtn;
-    private RadioGroup pl1RadioGroup;
-    private RadioButton pl1RadioButton;
+    private Button continueBtn;
+    private Button yesButton, noButton;
+    private TextView inviteMessage, choice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pl1RadioGroup = findViewById(R.id.pl1RadioGroup);
+        continueBtn = findViewById(R.id.continueBtn);
+        yesButton = findViewById(R.id.yesButton);
+        yesButton.setEnabled(false);
+        noButton = findViewById(R.id.noButton);
+        noButton.setEnabled(false);
+        inviteMessage = findViewById(R.id.inviteMessage);
+        inviteMessage.setEnabled(false);
+        choice = findViewById(R.id.choice);
+        choice.setEnabled(false);
 
-        submitBtn = findViewById(R.id.player1NameSubmit);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        SmsReceiver smsReceiver = new SmsReceiver(MainActivity.this);
+        continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // get selected radio button from radioGroup
-                int selectedId = pl1RadioGroup.getCheckedRadioButtonId();
-                String selectedSym = null;
-                pl1Name = findViewById(R.id.pl1Name);
-
-                if(selectedId == R.id.radio1){
-                    selectedSym = "o";
-                }else {
-                    selectedSym = "x";
-                }
-
-                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                intent.putExtra("player1name", pl1Name.getText().toString());
-                intent.putExtra("player1symbol", selectedSym);
-
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Settings1Activity.class);
                 startActivity(intent);
             }
         });
+
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Settings2Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    public void processRequest(String playerName, String playerSymbol) {
+        //Enable all buttons
+        choice.setEnabled(true);
+        yesButton.setEnabled(true);
+        noButton.setEnabled(true);
+
+        inviteMessage.setEnabled(true);
+        inviteMessage.setText("Your are invited by "+playerName+ " to play Tic-Tac-Toe Game. Do you want to accept this invitation?");
     }
 }
