@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver {
     MainActivity activity = null;
@@ -26,7 +27,7 @@ public class SmsReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         SmsMessage currentMessage = null;
-
+        Toast.makeText( context, "Sms Received", Toast.LENGTH_SHORT ).show();
         if (bundle != null){
             final Object[] pdusObj = (Object[]) bundle.get("pdus");
             for (int i = 0; i < pdusObj.length; i++) {

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         choice = findViewById(R.id.choice);
         choice.setEnabled(false);
 
-        SmsReceiver smsReceiver = new SmsReceiver(MainActivity.this);
+        //SmsReceiver smsReceiver = new SmsReceiver(MainActivity.this);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
