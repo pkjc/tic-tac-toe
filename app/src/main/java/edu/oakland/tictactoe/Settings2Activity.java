@@ -30,7 +30,7 @@ public class Settings2Activity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // get selected radio button from radioGroup
+                // get selected radio button from radioGroup 650 555-6789
                 int selectedId = pl2RadioGroup.getCheckedRadioButtonId();
                 String selectedSym = null;
                 pl2Name = findViewById(R.id.pl2Name);

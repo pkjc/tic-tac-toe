@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +15,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!PermissionsUtil.isSmsPermissionGranted(this)) {
+            PermissionsUtil.requestReadAndSendSmsPermission(this);
+        }
+
         setContentView(R.layout.activity_main);
 
         continueBtn = findViewById(R.id.continueBtn);
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         choice = findViewById(R.id.choice);
         choice.setEnabled(false);
 
-        //SmsReceiver smsReceiver = new SmsReceiver(MainActivity.this);
+        SmsReceiver smsReceiver = new SmsReceiver(MainActivity.this);
+
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +65,6 @@ public class MainActivity extends AppCompatActivity {
         noButton.setEnabled(true);
 
         inviteMessage.setEnabled(true);
-        inviteMessage.setText("Your are invited by "+playerName+ " to play Tic-Tac-Toe Game. Do you want to accept this invitation?");
+        inviteMessage.setText("You have been invited by "+playerName+ " to play Tic-Tac-Toe. Do you want to accept this invitation?");
     }
 }

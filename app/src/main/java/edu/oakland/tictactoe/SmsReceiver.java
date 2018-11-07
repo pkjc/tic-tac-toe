@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver {
@@ -23,6 +24,8 @@ public class SmsReceiver extends BroadcastReceiver {
         }
         context.registerReceiver(this, filter);
     }
+
+    //(650) 555-1212
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
@@ -39,11 +42,15 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
                 String senderNum = currentMessage.getDisplayOriginatingAddress();
                 String message = currentMessage.getDisplayMessageBody();
-
-                String[] tokens = message.split("|");
-                if(tokens.length != 0 && "$TicTacToe".equalsIgnoreCase(tokens[0])){
+                Toast.makeText( context, message, Toast.LENGTH_LONG ).show();
+                String[] tokens = message.split(" ");
+                for (String s : tokens){
+                    Log.d("SMS RECEIVER", s);
+                }
+                if(tokens.length != 0 && "STicTacToe".equalsIgnoreCase(tokens[0])){
                     String messageType = tokens[2];
                     if("INVITE".equalsIgnoreCase(messageType)){
+                        Toast.makeText( context, "INVITE detected", Toast.LENGTH_LONG ).show();
                         String playerName = tokens[3];
                         String playerSymbol = tokens[4];
                         activity.processRequest(playerName, playerSymbol);
