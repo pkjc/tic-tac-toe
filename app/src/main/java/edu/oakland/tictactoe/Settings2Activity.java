@@ -2,10 +2,9 @@ package edu.oakland.tictactoe;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,7 @@ public class Settings2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings2);
         pl2RadioGroup = findViewById(R.id.pl2RadioGroup);
-        continueBtn = findViewById(R.id.player2Continue);
+        continueBtn = findViewById(R.id.player2Cont);
 
         Intent intent = getIntent();
         pl1Name = intent.getStringExtra("Player1Name");
@@ -58,7 +57,7 @@ public class Settings2Activity extends AppCompatActivity {
                 //Choice is Yes and player 2 enters details, communicate this to player1.
                 String encodedText = ApplicationUtil.encodeTextSMS(pl2Name.getText().toString(), pl2Symbol, "ACCEPT");
                 smsManager.sendTextMessage(player1Number, null, encodedText, null, null);
-               Toast.makeText(Settings2Activity.this, encodedText, Toast.LENGTH_LONG).show();
+                Toast.makeText(Settings2Activity.this, encodedText, Toast.LENGTH_LONG).show();
                 //Navigate to Game screen
                 System.out.println("Player1Name"+pl1Name+"Player1Symbol"+pl1Symbol);
                 Intent intent = new Intent(Settings2Activity.this, GameActivity.class);
