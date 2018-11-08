@@ -1,7 +1,9 @@
 package edu.oakland.tictactoe;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -18,36 +20,44 @@ public class Settings1Activity extends AppCompatActivity {
     private EditText phoneNumberText;
     private RadioGroup pl1RadioGroup;
     private RadioButton pl1RadioButton;
+    private String pl1Symbol;
+    private String pl2Name;
+    private String pl2Symbol;
 
     SmsManager smsManager = SmsManager.getDefault();
-
+    SmsReceiver smsReceiver = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings1);
 
         pl1RadioGroup = findViewById(R.id.pl1RadioGroup);
-        continueButton = findViewById(R.id.continueButton);
+        continueButton = findViewById(R.id.player1Continue);
         phoneNumberText = findViewById(R.id.phoneNumber);
         inviteBtn = findViewById(R.id.inviteButton);
+
+        smsReceiver = new SmsReceiver(Settings1Activity.this);
+        registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
 
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // get selected radio button from radioGroup
                 int selectedId = pl1RadioGroup.getCheckedRadioButtonId();
-                String selectedSym = null;
+                //String selectedSym = null;
                 pl1Name = findViewById(R.id.pl1Name);
 
                 if(selectedId == R.id.radio1){
-                    selectedSym = "o";
+                    pl1Symbol = "o";
                 }else {
-                    selectedSym = "x";
+                    pl1Symbol = "x";
                 }
 
-                Intent intent = new Intent(Settings1Activity.this, Settings2Activity.class);
-                intent.putExtra("player1name", pl1Name.getText().toString());
-                intent.putExtra("player1symbol", selectedSym);
+                Intent intent = new Intent(Settings1Activity.this, GameActivity.class);
+                Player player1 = new Player(pl1Name.getText().toString(), pl1Symbol, true);
+                Player player2 = new Player(pl2Name, pl2Symbol, false);
+                intent.putExtra("player1", player1);
+                intent.putExtra("player2", player2);
 
                 startActivity(intent);
             }
@@ -69,18 +79,35 @@ public class Settings1Activity extends AppCompatActivity {
                 }else {
                     selectedSym = "x";
                 }
-                //Encode message
-                StringBuilder sb = new StringBuilder();
-                sb.append("STicTacToe").append(" ").append("TIC-TAC-TOE").append(" ").append("INVITE").
-                        append(" ").append(pl1Name.getText().toString()).append(" ").append(selectedSym);
+                String encodedText = ApplicationUtil.encodeTextSMS(pl1Name.getText().toString(), selectedSym, "INVITE");
                 String phoneNumber = phoneNumberText.getText().toString();
-                smsManager.sendTextMessage(phoneNumber, null, sb.toString(), null, null);
-                Toast.makeText(Settings1Activity.this, sb, Toast.LENGTH_LONG).show();
+                smsManager.sendTextMessage(phoneNumber, null, encodedText, null, null);
+                Toast.makeText(Settings1Activity.this, encodedText, Toast.LENGTH_LONG).show();
+
+                continueButton.setEnabled(false);
             }
         });
 
         if(!PermissionsUtil.isSmsPermissionGranted(this)) {
             PermissionsUtil.requestReadAndSendSmsPermission(this);
         }
+    }
+
+    /*@Override
+    protected void onRestart() {
+        super.onRestart();
+        smsReceiver = new SmsReceiver(Settings1Activity.this);
+        registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+
+        if(!PermissionsUtil.isSmsPermissionGranted(this)) {
+            PermissionsUtil.requestReadAndSendSmsPermission(this);
+        }
+    }*/
+
+    public void processAcceptRequest(String playerName, String playerSymbol){
+        continueButton.setEnabled(true);
+        pl2Name = playerName;
+        pl2Symbol = playerSymbol;
+        Toast.makeText(this, "INVITE accepted. Click CONTINUE to proceed.", Toast.LENGTH_LONG).show();
     }
 }

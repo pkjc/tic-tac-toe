@@ -11,17 +11,20 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver {
-    MainActivity activity = null;
-    Settings1Activity settings1Activity = null;
+    private static MainActivity activity;
+    private static Settings1Activity settings1Activity;
     IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
 
     public SmsReceiver(Context context){
         if(context instanceof MainActivity) {
             activity = (MainActivity) context;
+            Log.i("Rashmi","Main registered");
         }
         if (context instanceof  Settings1Activity){
             settings1Activity = (Settings1Activity) context;
+            Log.i("Rashmi", "Settings1 registered");
         }
+
         context.registerReceiver(this, filter);
     }
 
@@ -54,6 +57,12 @@ public class SmsReceiver extends BroadcastReceiver {
                         String playerName = tokens[3];
                         String playerSymbol = tokens[4];
                         activity.processRequest(playerName, playerSymbol);
+                    }
+                    if("ACCEPT".equalsIgnoreCase(messageType)){
+                        Toast.makeText(context, "Invite ACCEPTed", Toast.LENGTH_LONG).show();
+                        String playerName = tokens[3];
+                        String playerSymbol = tokens[4];
+                        settings1Activity.processAcceptRequest(playerName, playerSymbol);
                     }
                 }
             }

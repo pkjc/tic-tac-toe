@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private Button continueBtn;
     private Button yesButton, noButton;
     private TextView inviteMessage, choice;
+    SmsReceiver smsReceiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,12 @@ public class MainActivity extends AppCompatActivity {
         choice = findViewById(R.id.choice);
         choice.setEnabled(false);
 
-        SmsReceiver smsReceiver = new SmsReceiver(MainActivity.this);
+        smsReceiver = new SmsReceiver(MainActivity.this);
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, Settings1Activity.class);
                 startActivity(intent);
             }
@@ -65,6 +67,6 @@ public class MainActivity extends AppCompatActivity {
         noButton.setEnabled(true);
 
         inviteMessage.setEnabled(true);
-        inviteMessage.setText("You have been invited by "+playerName+ " to play Tic-Tac-Toe. Do you want to accept this invitation?");
+        inviteMessage.setText("You have been invited by "+ playerName + " to play Tic-Tac-Toe. Do you want to accept this invitation?");
     }
 }
