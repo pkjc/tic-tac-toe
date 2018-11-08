@@ -18,11 +18,11 @@ public class SmsReceiver extends BroadcastReceiver {
     public SmsReceiver(Context context){
         if(context instanceof MainActivity) {
             activity = (MainActivity) context;
-            Log.i("Rashmi","Main registered");
+            Log.i("TicTacToe","Main registered");
         }
         if (context instanceof  Settings1Activity){
             settings1Activity = (Settings1Activity) context;
-            Log.i("Rashmi", "Settings1 registered");
+            Log.i("TicTacToe", "Settings1 registered");
         }
 
         context.registerReceiver(this, filter);
