@@ -52,17 +52,18 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
                 if(tokens.length != 0 && "STicTacToe".equalsIgnoreCase(tokens[0])){
                     String messageType = tokens[2];
+                    Toast.makeText(context, "MessageTYpe"+messageType+senderNum, Toast.LENGTH_LONG).show();
                     if("INVITE".equalsIgnoreCase(messageType)){
-                        Toast.makeText( context, "INVITE detected", Toast.LENGTH_LONG ).show();
+                        //Toast.makeText( context, "INVITE detected", Toast.LENGTH_LONG ).show();
                         String playerName = tokens[3];
                         String playerSymbol = tokens[4];
-                        activity.processRequest(playerName, playerSymbol);
+                        activity.processRequest(playerName, playerSymbol, senderNum);
                     }
                     if("ACCEPT".equalsIgnoreCase(messageType)){
                         Toast.makeText(context, "Invite ACCEPTed", Toast.LENGTH_LONG).show();
                         String playerName = tokens[3];
                         String playerSymbol = tokens[4];
-                        settings1Activity.processAcceptRequest(playerName, playerSymbol);
+                        settings1Activity.processAcceptRequest(playerName, playerSymbol, senderNum);
                     }
                 }
             }
