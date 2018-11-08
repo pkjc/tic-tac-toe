@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private Button yesButton, noButton;
     private TextView inviteMessage, choice;
     SmsReceiver smsReceiver = null;
+    String senderNumber, senderName, senderSymbol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(MainActivity.this, Settings1Activity.class);
                 startActivity(intent);
             }
@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Settings2Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Player1Name", senderName);
+                bundle.putString("Player1Symbol", senderSymbol);
+                bundle.putString("Player1Number", senderNumber);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -60,12 +65,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void processRequest(String playerName, String playerSymbol) {
+    public void processRequest(String playerName, String playerSymbol, String srcPhoneNumber) {
         //Enable all buttons
         choice.setEnabled(true);
         yesButton.setEnabled(true);
         noButton.setEnabled(true);
 
+        //Set sender phone number and symbol
+        senderName = playerName;
+        senderSymbol = playerSymbol;
+        senderNumber = srcPhoneNumber;
         inviteMessage.setEnabled(true);
         inviteMessage.setText("You have been invited by "+ playerName + " to play Tic-Tac-Toe. Do you want to accept this invitation?");
     }

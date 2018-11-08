@@ -23,6 +23,7 @@ public class Settings1Activity extends AppCompatActivity {
     private String pl1Symbol;
     private String pl2Name;
     private String pl2Symbol;
+    private String senderNumber;
 
     SmsManager smsManager = SmsManager.getDefault();
     SmsReceiver smsReceiver = null;
@@ -66,8 +67,7 @@ public class Settings1Activity extends AppCompatActivity {
         inviteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(Settings1Activity.this, "Invite btn clicked", Toast.LENGTH_LONG).show();
+                //Toast.makeText(Settings1Activity.this, "Invite btn clicked", Toast.LENGTH_LONG).show();
 
                 // get selected radio button from radioGroup
                 int selectedId = pl1RadioGroup.getCheckedRadioButtonId();
@@ -82,7 +82,7 @@ public class Settings1Activity extends AppCompatActivity {
                 String encodedText = ApplicationUtil.encodeTextSMS(pl1Name.getText().toString(), selectedSym, "INVITE");
                 String phoneNumber = phoneNumberText.getText().toString();
                 smsManager.sendTextMessage(phoneNumber, null, encodedText, null, null);
-                Toast.makeText(Settings1Activity.this, encodedText, Toast.LENGTH_LONG).show();
+                //Toast.makeText(Settings1Activity.this, encodedText, Toast.LENGTH_LONG).show();
 
                 continueButton.setEnabled(false);
             }
@@ -93,21 +93,11 @@ public class Settings1Activity extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    protected void onRestart() {
-        super.onRestart();
-        smsReceiver = new SmsReceiver(Settings1Activity.this);
-        registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
-
-        if(!PermissionsUtil.isSmsPermissionGranted(this)) {
-            PermissionsUtil.requestReadAndSendSmsPermission(this);
-        }
-    }*/
-
-    public void processAcceptRequest(String playerName, String playerSymbol){
+    public void processAcceptRequest(String playerName, String playerSymbol, String srcPhoneNumber){
         continueButton.setEnabled(true);
         pl2Name = playerName;
         pl2Symbol = playerSymbol;
+        senderNumber = srcPhoneNumber;
         Toast.makeText(this, "INVITE accepted. Click CONTINUE to proceed.", Toast.LENGTH_LONG).show();
     }
 }

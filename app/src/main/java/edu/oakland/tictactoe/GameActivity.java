@@ -55,6 +55,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             btn.setEnabled(false);
         }
         player1.setCurrentPlayer(true);
+        playerName.setText(player1.getName());
         startBtn.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
         resetBtn.setOnClickListener(this);
