@@ -44,7 +44,6 @@ public class Settings1Activity extends AppCompatActivity {
             public void onClick(View v) {
                 // get selected radio button from radioGroup
                 int selectedId = pl1RadioGroup.getCheckedRadioButtonId();
-                //String selectedSym = null;
                 pl1Name = findViewById(R.id.pl1Name);
 
                 if(selectedId == R.id.radio1){
@@ -58,7 +57,8 @@ public class Settings1Activity extends AppCompatActivity {
                 Player player2 = new Player(pl2Name, pl2Symbol, false);
                 intent.putExtra("player1", player1);
                 intent.putExtra("player2", player2);
-
+                intent.putExtra("firstMove", true);
+                intent.putExtra("destPhone", senderNumber);
                 startActivity(intent);
             }
         });
@@ -66,8 +66,6 @@ public class Settings1Activity extends AppCompatActivity {
         inviteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(Settings1Activity.this, "Invite btn clicked", Toast.LENGTH_LONG).show();
-
                 // get selected radio button from radioGroup
                 int selectedId = pl1RadioGroup.getCheckedRadioButtonId();
                 String selectedSym = null;
@@ -78,7 +76,7 @@ public class Settings1Activity extends AppCompatActivity {
                 }else {
                     selectedSym = "x";
                 }
-                String encodedText = ApplicationUtil.encodeTextSMS(pl1Name.getText().toString(), selectedSym, "INVITE");
+                String encodedText = ApplicationUtil.encodeTextSMS(pl1Name.getText().toString(), selectedSym, "INVITE", 0);
                 String phoneNumber = phoneNumberText.getText().toString();
                 smsManager.sendTextMessage(phoneNumber, null, encodedText, null, null);
                 //Toast.makeText(Settings1Activity.this, encodedText, Toast.LENGTH_LONG).show();
@@ -98,5 +96,10 @@ public class Settings1Activity extends AppCompatActivity {
         pl2Symbol = playerSymbol;
         senderNumber = srcPhoneNumber;
         Toast.makeText(this, "INVITE accepted. Click CONTINUE to proceed.", Toast.LENGTH_LONG).show();
+    }
+
+    public void processDeclineRequest(String playerName, String playerSymbol, String srcPhoneNumber){
+        Toast.makeText(this, "Invite DECLINED by " + srcPhoneNumber, Toast.LENGTH_LONG).show();
+        continueButton.setEnabled(true);
     }
 }

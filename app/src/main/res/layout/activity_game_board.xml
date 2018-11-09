@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/player"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
@@ -22,8 +22,8 @@
 
     <TextView
         android:id="@+id/playername"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
@@ -37,7 +37,7 @@
     <GridLayout
         android:id="@+id/gameBoard"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
@@ -54,12 +54,12 @@
             android:id="@+id/button1"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="1"
             app:btnIndex="0"></edu.oakland.tictactoe.GameButton>
 
@@ -67,12 +67,12 @@
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="2"
             app:btnIndex="1"></edu.oakland.tictactoe.GameButton>
 
@@ -80,12 +80,12 @@
             android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="3"
             app:btnIndex="2"></edu.oakland.tictactoe.GameButton>
 
@@ -93,12 +93,12 @@
             android:id="@+id/button4"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="1"
             app:btnIndex="3"></edu.oakland.tictactoe.GameButton>
 
@@ -106,12 +106,12 @@
             android:id="@+id/button5"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="2"
             app:btnIndex="4"></edu.oakland.tictactoe.GameButton>
 
@@ -119,12 +119,12 @@
             android:id="@+id/button6"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="3"
             app:btnIndex="5"></edu.oakland.tictactoe.GameButton>
 
@@ -132,12 +132,12 @@
             android:id="@+id/button7"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="1"
             app:btnIndex="6"></edu.oakland.tictactoe.GameButton>
 
@@ -145,12 +145,12 @@
             android:id="@+id/button8"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="2"
             app:btnIndex="7"></edu.oakland.tictactoe.GameButton>
 
@@ -158,12 +158,12 @@
             android:id="@+id/button9"
             android:layout_width="0dp"
             android:layout_height="@dimen/gameBtnHeight"
-            android:layout_margin="@dimen/gameBtnMargin"
-            android:padding="@dimen/gameBtnPadding"
             android:layout_columnWeight="1"
             android:layout_gravity="fill_horizontal"
+            android:layout_margin="@dimen/gameBtnMargin"
             android:background="@drawable/rounded_rect_filled"
             android:gravity="center"
+            android:padding="@dimen/gameBtnPadding"
             android:tag="3"
             app:btnIndex="8"></edu.oakland.tictactoe.GameButton>
 
@@ -185,7 +185,7 @@
     <Button
         android:id="@+id/cancel"
         android:layout_width="0dp"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"

@@ -37,8 +37,8 @@ public class Settings2Activity extends AppCompatActivity {
         pl1Symbol = intent.getStringExtra("Player1Symbol");
         player1Number = intent.getStringExtra("Player1Number");
 
-        smsReceiver = new SmsReceiver(Settings2Activity.this);
-        registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+        //smsReceiver = new SmsReceiver(Settings2Activity.this);
+        //registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,16 +55,18 @@ public class Settings2Activity extends AppCompatActivity {
                 }
 
                 //Choice is Yes and player 2 enters details, communicate this to player1.
-                String encodedText = ApplicationUtil.encodeTextSMS(pl2Name.getText().toString(), pl2Symbol, "ACCEPT");
+                String encodedText = ApplicationUtil.encodeTextSMS(pl2Name.getText().toString(), pl2Symbol, "ACCEPT", 0);
                 smsManager.sendTextMessage(player1Number, null, encodedText, null, null);
-                Toast.makeText(Settings2Activity.this, encodedText, Toast.LENGTH_LONG).show();
+                //Toast.makeText(Settings2Activity.this, encodedText, Toast.LENGTH_LONG).show();
                 //Navigate to Game screen
-                System.out.println("Player1Name"+pl1Name+"Player1Symbol"+pl1Symbol);
+                //System.out.println("Player1Name"+pl1Name+"Player1Symbol"+pl1Symbol);
                 Intent intent = new Intent(Settings2Activity.this, GameActivity.class);
                 Player player1 = new Player(pl1Name, pl1Symbol, true);
                 Player player2 = new Player(pl2Name.getText().toString(), pl2Symbol, false);
                 intent.putExtra("player1", player1);
                 intent.putExtra("player2", player2);
+                intent.putExtra("disableStart", true);
+                intent.putExtra("firstMove", true);
                 startActivity(intent);
             }
         });

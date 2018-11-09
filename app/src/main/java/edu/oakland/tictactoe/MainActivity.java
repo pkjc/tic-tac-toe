@@ -3,6 +3,7 @@ package edu.oakland.tictactoe;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView inviteMessage, choice;
     SmsReceiver smsReceiver = null;
     String senderNumber, senderName, senderSymbol;
+
+    SmsManager smsManager = SmsManager.getDefault();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +63,16 @@ public class MainActivity extends AppCompatActivity {
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Clear up the invite message
+                inviteMessage.setEnabled(false);
+                inviteMessage.setText("");
+                String encodedText = ApplicationUtil.encodeTextSMS(senderName, senderSymbol, "DECLINE", 0);
+                smsManager.sendTextMessage(senderNumber, null, encodedText, null, null);
             }
         });
     }
 
-    public void processRequest(String playerName, String playerSymbol, String srcPhoneNumber) {
+    public void processInviteRequest(String playerName, String playerSymbol, String srcPhoneNumber) {
         //Enable all buttons
         choice.setEnabled(true);
         yesButton.setEnabled(true);
@@ -78,4 +85,6 @@ public class MainActivity extends AppCompatActivity {
         inviteMessage.setEnabled(true);
         inviteMessage.setText("You have been invited by "+ playerName + " to play Tic-Tac-Toe. Do you want to accept this invitation?");
     }
+
+
 }
