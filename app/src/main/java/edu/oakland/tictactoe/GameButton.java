@@ -13,7 +13,7 @@ import java.util.Observer;
  * TODO: document your custom view class.
  */
 public class GameButton extends ConstraintLayout implements Observer {
-    private int btnIndex;
+    private int btnIndex = 0;
     private Button button = null;
     private int btnCounter = 0;
 
