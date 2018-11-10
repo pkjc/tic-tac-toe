@@ -48,11 +48,28 @@ public class Settings2Activity extends AppCompatActivity {
                 //String selectedSym = null;
                 pl2Name = findViewById(R.id.pl2Name);
 
-                if(selectedId == R.id.radio1){
-                    pl2Symbol = "o";
-                }else {
+                if(pl1Symbol.equalsIgnoreCase("o")){
                     pl2Symbol = "x";
+                    RadioButton rb = findViewById(selectedId);
+                    rb.setEnabled(false);
+                    rb.setChecked(false);
+                    RadioButton rb1 = findViewById(R.id.radio2);
+                    rb1.setEnabled(true);
+                    rb1.setChecked(true);
+                } else {
+                    pl2Symbol = "o";
                 }
+
+
+
+
+//                findViewById(selectedId).setEnabled(false);
+//                if(selectedId == R.id.radio1){
+//                    pl2Symbol = "o";
+//                    findViewById(selectedId)
+//                }else {
+//                    pl2Symbol = "x";
+//                }
 
                 //Choice is Yes and player 2 enters details, communicate this to player1.
                 String encodedText = ApplicationUtil.encodeTextSMS(pl2Name.getText().toString(), pl2Symbol, "ACCEPT");
