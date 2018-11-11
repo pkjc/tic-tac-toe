@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -158,14 +159,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             startBtn.setEnabled(true);
             //Send cancel sms to player2
             String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), "CANCEL", 0);
-            //String phoneNumber = "5554";
             smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
         } else if (resetBtn.getId() == v.getId()) {
             stopGame();
             startBtn.setEnabled(true);
             //Send reset sms to player2
             String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), "RESET", 0);
-            //String phoneNumber = "5554";
             smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
         } else {
             if (v instanceof GameButton) {
@@ -238,12 +237,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         for (GameButton b : gameBtns) {
             b.setEnabled(true);
+            //b.setBackgroundResource(R.drawable.radio_bg);
+            Log.d("Tag", b.getTag().toString());
             if(b.getBtnIndex() != dataCell && "".equals(b.getTag())) {
                 b.setBackgroundResource(R.drawable.radio_bg);
             }
         }
         gameBtns[dataCell].setEnabled(false);
-
 
         for (String symbol: playersMap.keySet()) {
             if(symbol.equals(plSymbol)){
@@ -266,7 +266,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Player wonPlayer = playersMap.get(plSymbol);
 
         playerName.setText(wonPlayer.getName() + " has won!");
-        playerName.setTextSize(32);
+        playerName.setTextSize(24);
         playerName.setTextColor(Color.RED);
         playerNameLabel.setText("");
         for (GameButton b : gameBtns) {

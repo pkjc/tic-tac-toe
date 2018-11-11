@@ -85,6 +85,4 @@ public class MainActivity extends AppCompatActivity {
         inviteMessage.setEnabled(true);
         inviteMessage.setText("You have been invited by "+ playerName + " to play Tic-Tac-Toe. Do you want to accept this invitation?");
     }
-
-
 }
