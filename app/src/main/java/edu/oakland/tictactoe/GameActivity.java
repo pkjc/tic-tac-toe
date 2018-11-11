@@ -212,6 +212,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 for (GameButton b : gameBtns) {
                     b.setEnabled(false);
+                    // Tags are indexes eg 0, 1, 2.. before they're set to o or x
                     if(b.getBtnIndex() != index && "".equals(b.getTag())){
                         b.setBackgroundResource(R.drawable.rounded_rect_filled);
                     }
@@ -235,15 +236,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             resetBtn.setEnabled(true);
             isFirstMove = false;
         }
+
+        gameBtns[dataCell].setEnabled(false);
+
         for (GameButton b : gameBtns) {
             b.setEnabled(true);
             //b.setBackgroundResource(R.drawable.radio_bg);
-            Log.d("Tag", b.getTag().toString());
-            if(b.getBtnIndex() != dataCell && "".equals(b.getTag())) {
+            Log.d("<-- GAME ACTIVITY --> ", b.getTag().toString() + " DATACELL " + dataCell);
+            // from log: <-- GAME ACTIVITY -->: o DATACELL 2
+            // from log: <-- GAME ACTIVITY -->: x DATACELL 2
+            // datacell is the index of button marked
+            // button tags are indexes i.e 0, 1, 2.. before they're set to 'o' or 'x'
+            if(b.getBtnIndex() != dataCell && (b.getTag().toString() != "o" || b.getTag().toString() != "x")) {
                 b.setBackgroundResource(R.drawable.radio_bg);
             }
         }
-        gameBtns[dataCell].setEnabled(false);
 
         for (String symbol: playersMap.keySet()) {
             if(symbol.equals(plSymbol)){
