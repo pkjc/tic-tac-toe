@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver {
     private static MainActivity activity;
@@ -68,10 +67,13 @@ public class SmsReceiver extends BroadcastReceiver {
                     if("INVITE".equalsIgnoreCase(messageType)){
                         //Toast.makeText( context, "INVITE detected", Toast.LENGTH_LONG ).show();
                         activity.processInviteRequest(playerName, playerSymbol, senderNum);
-                    } else if("ACCEPT".equalsIgnoreCase(messageType)){
+                    } else if("START".equalsIgnoreCase(messageType)){
+                        //Toast.makeText(context, "Invite ACCEPTed", Toast.LENGTH_LONG).show();
+                        gameActivity.processStartRequest(playerName, playerSymbol, senderNum);
+                    }else if("ACCEPT".equalsIgnoreCase(messageType)){
                         //Toast.makeText(context, "Invite ACCEPTed", Toast.LENGTH_LONG).show();
                         settings1Activity.processAcceptRequest(playerName, playerSymbol, senderNum);
-                    } else if("DECLINE".equalsIgnoreCase(messageType)) {
+                    }else if("DECLINE".equalsIgnoreCase(messageType)) {
                         settings1Activity.processDeclineRequest(playerName, playerSymbol, senderNum);
                     } else if("MOVE".equalsIgnoreCase(messageType)){
                         //Toast.makeText(context, "Invite ACCEPTed", Toast.LENGTH_LONG).show();

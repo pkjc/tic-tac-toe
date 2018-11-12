@@ -153,6 +153,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             for (GameButton b : gameBtns) {
                 b.setBackgroundResource(R.drawable.radio_bg);
                 b.setEnabled(true);
+                String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), "START", 0);
+                smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
             }
         } else if (cancelBtn.getId() == v.getId()) {
             stopGame();
@@ -213,9 +215,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 for (GameButton b : gameBtns) {
                     b.setEnabled(false);
                     // Tags are indexes eg 0, 1, 2.. before they're set to o or x
-                    if(b.getBtnIndex() != index && "".equals(b.getTag())){
-                        b.setBackgroundResource(R.drawable.rounded_rect_filled);
-                    }
+                    Toast.makeText(this, "inside game btn", Toast.LENGTH_SHORT).show();
+//                    if(b.getTag().toString() != "o" && b.getTag().toString() != "x"){
+//                        b.setBackgroundResource(R.drawable.radio_bg);
+//                    }
                 }
                 gameBtns[index].setEnabled(false);
             }
@@ -241,15 +244,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         for (GameButton b : gameBtns) {
             b.setEnabled(true);
+            Toast.makeText(this, "PLAYED", Toast.LENGTH_LONG).show();
             //b.setBackgroundResource(R.drawable.radio_bg);
             Log.d("<-- GAME ACTIVITY --> ", b.getTag().toString() + " DATACELL " + dataCell);
             // from log: <-- GAME ACTIVITY -->: o DATACELL 2
             // from log: <-- GAME ACTIVITY -->: x DATACELL 2
             // datacell is the index of button marked
             // button tags are indexes i.e 0, 1, 2.. before they're set to 'o' or 'x'
-            if(b.getBtnIndex() != dataCell && (b.getTag().toString() != "o" || b.getTag().toString() != "x")) {
-                b.setBackgroundResource(R.drawable.radio_bg);
-            }
+//            if(b.getTag().toString() != "o" && b.getTag().toString() != "x") {
+//                b.setBackgroundResource(R.drawable.radio_bg);
+//            }
         }
 
         for (String symbol: playersMap.keySet()) {
@@ -291,5 +295,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         stopGame();
         startBtn.setEnabled(true);
         Toast.makeText(this, "Reset request from " + plName + ", resetting the Game.", Toast.LENGTH_LONG).show();
+    }
+
+    public void processStartRequest(String playerName, String playerSymbol, String senderNum) {
+        startBtn.setEnabled(false);
+        for (GameButton b : gameBtns) {
+            b.setBackgroundResource(R.drawable.radio_bg);
+        }
     }
 }
