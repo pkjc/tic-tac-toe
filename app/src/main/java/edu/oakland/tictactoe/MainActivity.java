@@ -66,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
                 //Clear up the invite message
                 inviteMessage.setEnabled(false);
                 inviteMessage.setText("");
+                //disable choices
+                choice.setEnabled(false);
+                yesButton.setEnabled(false);
+                noButton.setEnabled(false);
                 String encodedText = ApplicationUtil.encodeTextSMS(senderName, senderSymbol, "DECLINE", 0);
                 smsManager.sendTextMessage(senderNumber, null, encodedText, null, null);
             }

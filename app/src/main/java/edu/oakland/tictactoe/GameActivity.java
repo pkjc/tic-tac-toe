@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button startBtn;
     Button cancelBtn;
     Button resetBtn;
+    //Timer
+    Chronometer timer = null;
+    Boolean resume = false;
+    long elapsedTime;
 
     GameButton[] gameBtns = new GameButton[9];
     DataCell[] dataCells = null;
@@ -56,6 +62,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         startBtn = findViewById(R.id.start);
         cancelBtn = findViewById(R.id.cancel);
         resetBtn = findViewById(R.id.reset);
+        timer = findViewById(R.id.timer);
+
+        timer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if(!resume){
+                    long minutes = ((SystemClock.elapsedRealtime() - timer.getBase())/1000) / 60;
+                    long seconds = ((SystemClock.elapsedRealtime() - timer.getBase())/1000) % 60;
+                    elapsedTime = SystemClock.elapsedRealtime();
+                } else {
+                    long minutes = ((elapsedTime - timer.getBase())/1000) / 60;
+                    long seconds = ((elapsedTime - timer.getBase())/1000) % 60;
+                    elapsedTime = elapsedTime + 1000;
+                }
+            }
+        });
 
         initGame();
         //If first move, then enable cancel and reset buttons of player2.
@@ -115,8 +137,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 b.setEnabled(false);
             }
             win = true;
+            resetTimer();
         }
         return win;
+    }
+
+    private void resetTimer(){
+        //Stop the timer as move sms arrived
+        timer.stop();
+        timer.setBase(SystemClock.elapsedRealtime());
+        timer.setText("00:00");
+    }
+
+    private void startTimer(){
+        timer.setBase(SystemClock.elapsedRealtime());
+        timer.start();
     }
 
     private boolean winningConditions(String playerSymbol) {
@@ -149,6 +184,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (startBtn.getId() == v.getId()) {
+            resetTimer();
             playerName.setText(player1.getName());
             for (GameButton b : gameBtns) {
                 b.setBackgroundResource(R.drawable.radio_bg);
@@ -157,6 +193,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
             }
         } else if (cancelBtn.getId() == v.getId()) {
+            resetTimer();
             stopGame();
             startBtn.setEnabled(true);
             //Send cancel sms to player2
@@ -187,7 +224,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         action = "MOVE";
                     }
                     String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), action, index);
-                    //String phoneNumber = "5554";
                     smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
 
                 } else {
@@ -205,17 +241,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         action = "MOVE";
                     }
                     String encodedText = ApplicationUtil.encodeTextSMS(player2.getName(), player2.getSymbol(), action, index);
-                    //String phoneNumber = "5556";
                     smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
                 }
                 if(isFirstMove) {
                     startBtn.setEnabled(false);
                     isFirstMove = false;
                 }
+                //Start the timer until the move sms arrives
+                if(!win) {
+                    startTimer();
+                }
+
                 for (GameButton b : gameBtns) {
                     b.setEnabled(false);
                     // Tags are indexes eg 0, 1, 2.. before they're set to o or x
-                    Toast.makeText(this, "inside game btn", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "inside game btn", Toast.LENGTH_SHORT).show();
 //                    if(b.getTag().toString() != "o" && b.getTag().toString() != "x"){
 //                        b.setBackgroundResource(R.drawable.radio_bg);
 //                    }
@@ -239,21 +279,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             resetBtn.setEnabled(true);
             isFirstMove = false;
         }
+        //Stop the timer as move sms arrived
+        resetTimer();
 
         gameBtns[dataCell].setEnabled(false);
 
         for (GameButton b : gameBtns) {
             b.setEnabled(true);
-            Toast.makeText(this, "PLAYED", Toast.LENGTH_LONG).show();
-            //b.setBackgroundResource(R.drawable.radio_bg);
+            //Toast.makeText(this, "PLAYED", Toast.LENGTH_LONG).show();
             Log.d("<-- GAME ACTIVITY --> ", b.getTag().toString() + " DATACELL " + dataCell);
-            // from log: <-- GAME ACTIVITY -->: o DATACELL 2
-            // from log: <-- GAME ACTIVITY -->: x DATACELL 2
-            // datacell is the index of button marked
-            // button tags are indexes i.e 0, 1, 2.. before they're set to 'o' or 'x'
-//            if(b.getTag().toString() != "o" && b.getTag().toString() != "x") {
-//                b.setBackgroundResource(R.drawable.radio_bg);
-//            }
         }
 
         for (String symbol: playersMap.keySet()) {
@@ -283,6 +317,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (GameButton b : gameBtns) {
             b.setEnabled(false);
         }
+
+        //Stop the timer as win sms arrived
+        resetTimer();
     }
 
     public void processCancelRequest(String plName, String plSymbol, String senderNum, int dataCell){
@@ -297,8 +334,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, "Reset request from " + plName + ", resetting the Game.", Toast.LENGTH_LONG).show();
     }
 
-    public void processStartRequest(String playerName, String playerSymbol, String senderNum) {
+    public void processStartRequest(String plName, String playerSymbol, String senderNum) {
         startBtn.setEnabled(false);
+        playerName.setText(plName);
         for (GameButton b : gameBtns) {
             b.setBackgroundResource(R.drawable.radio_bg);
         }

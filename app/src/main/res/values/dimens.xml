@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="gameBtnHeight">115dp</dimen>
+    <dimen name="gameBtnHeight">80dp</dimen>
     <dimen name="gameBtnMargin">4dp</dimen>
     <dimen name="gameBtnPadding">4dp</dimen>
 </resources>

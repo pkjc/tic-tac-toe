@@ -39,6 +39,8 @@ public class Settings1Activity extends AppCompatActivity {
         smsReceiver = new SmsReceiver(Settings1Activity.this);
         registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
 
+        //Make continue disabled
+        continueButton.setEnabled(false);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +83,7 @@ public class Settings1Activity extends AppCompatActivity {
                 smsManager.sendTextMessage(phoneNumber, null, encodedText, null, null);
                 //Toast.makeText(Settings1Activity.this, encodedText, Toast.LENGTH_LONG).show();
 
-                continueButton.setEnabled(false);
+                //continueButton.setEnabled(false);
             }
         });
 
@@ -100,6 +102,6 @@ public class Settings1Activity extends AppCompatActivity {
 
     public void processDeclineRequest(String playerName, String playerSymbol, String srcPhoneNumber){
         Toast.makeText(this, "Invite DECLINED by " + srcPhoneNumber, Toast.LENGTH_LONG).show();
-        continueButton.setEnabled(true);
+        //continueButton.setEnabled(true);
     }
 }
