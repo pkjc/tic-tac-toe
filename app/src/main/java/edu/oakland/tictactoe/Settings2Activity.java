@@ -37,6 +37,17 @@ public class Settings2Activity extends AppCompatActivity {
         pl1Symbol = intent.getStringExtra("Player1Symbol");
         player1Number = intent.getStringExtra("Player1Number");
 
+        RadioButton radio1 = findViewById(R.id.radio1);
+        RadioButton radio2 = findViewById(R.id.radio2);
+        if(pl1Symbol.equalsIgnoreCase("o")){
+            radio1.setEnabled(false);
+            radio1.setChecked(false);
+            radio2.setChecked(true);
+        }else {
+            radio1.setChecked(true);
+            radio2.setChecked(false);
+            radio2.setEnabled(false);
+        }
         //smsReceiver = new SmsReceiver(Settings2Activity.this);
         //registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
 
@@ -45,7 +56,6 @@ public class Settings2Activity extends AppCompatActivity {
             public void onClick(View view) {
                 // get selected radio button from radioGroup 650 555-6789
                 int selectedId = pl2RadioGroup.getCheckedRadioButtonId();
-                //String selectedSym = null;
                 pl2Name = findViewById(R.id.pl2Name);
 
                 if(pl1Symbol.equalsIgnoreCase("o")){
@@ -59,24 +69,29 @@ public class Settings2Activity extends AppCompatActivity {
                 } else {
                     pl2Symbol = "o";
                 }
-
-
-
-
-//                findViewById(selectedId).setEnabled(false);
-//                if(selectedId == R.id.radio1){
-//                    pl2Symbol = "o";
-//                    findViewById(selectedId)
-//                }else {
-//                    pl2Symbol = "x";
-//                }
+                  //findViewById(selectedId).setEnabled(false);
+                /*RadioButton radio1 = findViewById(R.id.radio1);
+                RadioButton radio2 = findViewById(R.id.radio2);
+                if(pl1Symbol == radio1.toString()){
+                    //pl2Symbol = "o";
+                    //findViewById(selectedId);
+                    radio1.setEnabled(false);
+                    radio1.setChecked(false);
+                    radio2.setChecked(true);
+                    pl2Symbol = "x";
+                }else {
+                    //pl2Symbol = "x";
+                    radio1.setChecked(true);
+                    radio2.setChecked(false);
+                    radio2.setEnabled(false);
+                    pl2Symbol = "o";
+                }*/
 
                 //Choice is Yes and player 2 enters details, communicate this to player1.
                 String encodedText = ApplicationUtil.encodeTextSMS(pl2Name.getText().toString(), pl2Symbol, "ACCEPT", 0);
                 smsManager.sendTextMessage(player1Number, null, encodedText, null, null);
                 //Toast.makeText(Settings2Activity.this, encodedText, Toast.LENGTH_LONG).show();
                 //Navigate to Game screen
-                //System.out.println("Player1Name"+pl1Name+"Player1Symbol"+pl1Symbol);
                 Intent intent = new Intent(Settings2Activity.this, GameActivity.class);
                 Player player1 = new Player(pl1Name, pl1Symbol, true);
                 Player player2 = new Player(pl2Name.getText().toString(), pl2Symbol, false);
@@ -84,6 +99,7 @@ public class Settings2Activity extends AppCompatActivity {
                 intent.putExtra("player2", player2);
                 intent.putExtra("disableStart", true);
                 intent.putExtra("firstMove", true);
+                intent.putExtra("instanceOwner", player2);
                 startActivity(intent);
             }
         });

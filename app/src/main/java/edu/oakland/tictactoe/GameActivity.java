@@ -23,6 +23,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button startBtn;
     Button cancelBtn;
     Button resetBtn;
+    //Button editBtn;
     //Timer
     Chronometer timer = null;
     Boolean resume = false;
@@ -37,6 +38,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Player player2;
     Boolean isFirstMove = false;
     String destPhone = null;
+    Player instanceOwner;
 
     SmsManager smsManager = SmsManager.getDefault();
     SmsReceiver smsReceiver = null;
@@ -52,6 +54,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         player1 = (Player) intent.getSerializableExtra("player1");
         player2 = (Player) intent.getSerializableExtra("player2");
         destPhone = intent.getStringExtra("destPhone");
+        instanceOwner = (Player)intent.getSerializableExtra("instanceOwner");
 
         playersMap.put(player1.getSymbol(), player1);
         playersMap.put(player2.getSymbol(), player2);
@@ -185,11 +188,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (startBtn.getId() == v.getId()) {
             resetTimer();
-            playerName.setText(player1.getName());
+            //playerName.setText(player1.getName());
+            playerName.setText(instanceOwner.getName());
+            if(player1.getName().equalsIgnoreCase(instanceOwner.getName())){
+                player1.setCurrentPlayer(true);
+                player2.setCurrentPlayer(false);
+            } else {
+                player2.setCurrentPlayer(true);
+                player1.setCurrentPlayer(false);
+            }
             for (GameButton b : gameBtns) {
                 b.setBackgroundResource(R.drawable.radio_bg);
                 b.setEnabled(true);
-                String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), "START", 0);
+                String encodedText = ApplicationUtil.encodeTextSMS(instanceOwner.getName(), instanceOwner.getSymbol(), "START", 0);
                 smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
             }
         } else if (cancelBtn.getId() == v.getId()) {
@@ -197,13 +208,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             stopGame();
             startBtn.setEnabled(true);
             //Send cancel sms to player2
-            String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), "CANCEL", 0);
+            String encodedText = ApplicationUtil.encodeTextSMS(instanceOwner.getName(), instanceOwner.getSymbol(), "CANCEL", 0);
             smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
         } else if (resetBtn.getId() == v.getId()) {
             stopGame();
             startBtn.setEnabled(true);
             //Send reset sms to player2
-            String encodedText = ApplicationUtil.encodeTextSMS(player1.getName(), player1.getSymbol(), "RESET", 0);
+            String encodedText = ApplicationUtil.encodeTextSMS(instanceOwner.getName(), instanceOwner.getSymbol(), "RESET", 0);
             smsManager.sendTextMessage(destPhone, null, encodedText, null, null);
         } else {
             if (v instanceof GameButton) {
@@ -252,19 +263,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     startTimer();
                 }
 
-                for (GameButton b : gameBtns) {
-                    b.setEnabled(false);
-                    // Tags are indexes eg 0, 1, 2.. before they're set to o or x
-                   // Toast.makeText(this, "inside game btn", Toast.LENGTH_SHORT).show();
-//                    if(b.getTag().toString() != "o" && b.getTag().toString() != "x"){
-//                        b.setBackgroundResource(R.drawable.radio_bg);
-//                    }
+                //for (GameButton b : gameBtns) {
+                for(int i=0; i < gameBtns.length; i++){
+                    gameBtns[i].setEnabled(false);
+                    //Toast.makeText(this, b.getTag().toString(), Toast.LENGTH_SHORT).show();
+                    if(!gameBtns[i].getTag().equals(player1.getSymbol()) && !gameBtns[i].getTag().equals(player2.getSymbol())){
+                        gameBtns[i].setBackgroundResource(R.drawable.rounded_rect_filled);
+                    }
                 }
                 gameBtns[index].setEnabled(false);
             }
         }
     }
 
+    /*
+     * This method processes the Move Request
+     */
     public void processMoveRequest(String plName, String plSymbol, String senderNum, int dataCell) {
         Toast.makeText(getApplicationContext(), "Move action" + plName, Toast.LENGTH_SHORT).show();
         Player movedPlayer = null;
@@ -284,10 +298,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         gameBtns[dataCell].setEnabled(false);
 
-        for (GameButton b : gameBtns) {
-            b.setEnabled(true);
+        for(int i=0; i < gameBtns.length ; i++){
+            if(!gameBtns[i].getTag().equals(player1.getSymbol()) && !gameBtns[i].getTag().equals(player2.getSymbol())){
+                gameBtns[i].setEnabled(true);
+                gameBtns[i].setBackgroundResource(R.drawable.radio_bg);
+            }
             //Toast.makeText(this, "PLAYED", Toast.LENGTH_LONG).show();
-            Log.d("<-- GAME ACTIVITY --> ", b.getTag().toString() + " DATACELL " + dataCell);
+            //Log.d("<-- GAME ACTIVITY --> ", gameBtns[i].getTag().toString() + " DATACELL " + dataCell);
         }
 
         for (String symbol: playersMap.keySet()) {
@@ -306,9 +323,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         playerWonProcess(movedPlayer);
     }
 
+    /*
+     * This method processes the Win Scenario Request
+     */
     public void processWinRequest(String plName, String plSymbol, String senderNum, int dataCell){
-        Toast.makeText(getApplicationContext(), "Win action"+playerName, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Win action"+playerName, Toast.LENGTH_SHORT).show();
         Player wonPlayer = playersMap.get(plSymbol);
+
+        //Update the last move
+        wonPlayer.markCell(dataCells[dataCell], dataCell);
+        gameBtns[dataCell].setTag(plSymbol);
 
         playerName.setText(wonPlayer.getName() + " has won!");
         playerName.setTextSize(24);
@@ -317,23 +341,31 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (GameButton b : gameBtns) {
             b.setEnabled(false);
         }
-
         //Stop the timer as win sms arrived
         resetTimer();
     }
 
+    /*
+    * This method processes the Cancel Request
+    */
     public void processCancelRequest(String plName, String plSymbol, String senderNum, int dataCell){
         stopGame();
         startBtn.setEnabled(true);
         Toast.makeText(this, "Cancel request from " + plName + ", resetting the Game.", Toast.LENGTH_LONG).show();
     }
 
+    /*
+     * This method processes the Reset Request
+     */
     public void processResetRequest(String plName, String plSymbol, String senderNum, int dataCell){
         stopGame();
         startBtn.setEnabled(true);
         Toast.makeText(this, "Reset request from " + plName + ", resetting the Game.", Toast.LENGTH_LONG).show();
     }
 
+    /*
+     * This method processes the Start Request
+     */
     public void processStartRequest(String plName, String playerSymbol, String senderNum) {
         startBtn.setEnabled(false);
         playerName.setText(plName);

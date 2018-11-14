@@ -56,9 +56,9 @@ public class SmsReceiver extends BroadcastReceiver {
                 String message = currentMessage.getDisplayMessageBody();
                 //Toast.makeText( context, message, Toast.LENGTH_LONG ).show();
                 String[] tokens = message.split(" ");
-                for (String s : tokens){
+                /*for (String s : tokens){
                     Log.d("SMS RECEIVER", s);
-                }
+                }*/
                 if(tokens.length != 0 && "STicTacToe".equalsIgnoreCase(tokens[0])){
                     String messageType = tokens[2];
                     //Toast.makeText(context, "MessageTYpe"+messageType+senderNum, Toast.LENGTH_LONG).show();

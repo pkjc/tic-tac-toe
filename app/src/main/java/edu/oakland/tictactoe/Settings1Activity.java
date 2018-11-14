@@ -61,6 +61,7 @@ public class Settings1Activity extends AppCompatActivity {
                 intent.putExtra("player2", player2);
                 intent.putExtra("firstMove", true);
                 intent.putExtra("destPhone", senderNumber);
+                intent.putExtra("instanceOwner", player1);
                 startActivity(intent);
             }
         });
@@ -82,8 +83,6 @@ public class Settings1Activity extends AppCompatActivity {
                 String phoneNumber = phoneNumberText.getText().toString();
                 smsManager.sendTextMessage(phoneNumber, null, encodedText, null, null);
                 //Toast.makeText(Settings1Activity.this, encodedText, Toast.LENGTH_LONG).show();
-
-                //continueButton.setEnabled(false);
             }
         });
 
@@ -102,6 +101,5 @@ public class Settings1Activity extends AppCompatActivity {
 
     public void processDeclineRequest(String playerName, String playerSymbol, String srcPhoneNumber){
         Toast.makeText(this, "Invite DECLINED by " + srcPhoneNumber, Toast.LENGTH_LONG).show();
-        //continueButton.setEnabled(true);
     }
 }
