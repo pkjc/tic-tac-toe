@@ -1,13 +1,13 @@
 {
   "Lab": {
     "id": "int",
-    "site": "Site[]"
+    "sites": "Site[]"
   },
   "Site": {
     "id": "int",
     "type": "int",
     "name": "string",
-    "device": "Device[]",
+    "devices": "Device[]",
     "lab": "Lab"
   },
   "Device": {
@@ -21,7 +21,7 @@
     "calName": "string",
     "calInterval": "int",
     "calTolerance": "int",
-    "subDevice": "SubDevice[]",
+    "sub-devices": "SubDevice[]",
     "site": "Site"
   },
   "SubDevice": {
