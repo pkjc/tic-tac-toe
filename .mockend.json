@@ -1,0 +1,38 @@
+{
+  "Lab": {
+    "id": "int",
+    "site": "Site[]"
+  },
+  "Site": {
+    "id": "int",
+    "type": "int",
+    "name": "string",
+    "device": "Device[]",
+    "lab": "Lab"
+  },
+  "Device": {
+    "id": "int",
+    "name": "string",
+    "iss": "string",
+    "serial": "string",
+    "groupId": "string",
+    "isCert": "boolean",
+    "calId": "int",
+    "calName": "string",
+    "calInterval": "int",
+    "calTolerance": "int",
+    "subDevice": "SubDevice[]",
+    "site": "Site"
+  },
+  "SubDevice": {
+    "id": "int",
+    "name": "string",
+    "iss": "string",
+    "serial": "string",
+    "calId": "int",
+    "calName": "string",
+    "calInterval": "int",
+    "calTolerance": "int",
+    "device": "Device"
+  }
+}
